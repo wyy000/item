@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flappy Bird</title>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		background: #333;
+	}
+	canvas {
+		display: block;
+		margin: 0 auto;
+		background: #fff;
+	}
+	</style>
+</head>
+
+<body>
+
+	<canvas width="360" height="512" id="myCanvas"></canvas>
+	
+	<script type="text/javascript" src="js/Game.js"></script>
+	<script type="text/javascript" src="js/Pipe.js"></script>
+	<script type="text/javascript" src="js/Bird.js"></script>
+	<script type="text/javascript" src="js/Score.js"></script>
+	<script type="text/javascript" src="js/Background.js"></script>
+	<script>
+
+
+
+	var arr =  ["images/bird0_0.png", "images/bird0_1.png", "images/bird0_2.png", "images/bg_day.png", "images/bg_night.png", "images/land.png", "images/pipe_down.png", "images/pipe_up.png","images/text_game_over.png", "images/button_play.png","images/text_ready.png", "images/font_048.png","images/font_049.png","images/font_050.png","images/font_051.png","images/font_052.png","images/font_053.png","images/font_054.png","images/font_055.png","images/font_056.png","images/font_057.png"];
+
+	loadImage(arr,function(imgArr) {
+		var canvas = document.getElementById("myCanvas");
+		var ctx = canvas.getContext("2d");
+		var bird = new Bird(imgArr.slice(0,3), 100, 100);
+		var pipe = new Pipe(imgArr[6],imgArr[7], 4, 360);
+		var land = new Background(imgArr.slice(5,6), 4, 0, 400);
+		var bg = new Background(imgArr.slice(3,5), 2, 0, 0);
+		var score = new Score(imgArr.slice(11), imgArr.slice(8, 11), 22, 45);
+		window.g = new Game(ctx, bird, pipe, land, bg, score);
+	})
+
+
+	function loadImage(arr, callBack) {
+
+		var idx = 0;
+		var loadImageArr = [];
+
+
+		arr.forEach(function(value, index) {
+			
+			var img = new Image();
+			img.src = value;
+
+			img.onload = function() {
+				idx++;
+				loadImageArr[index] = this;
+				if(idx === arr.length) {
+					callBack(loadImageArr);
+				}
+			}
+		})
+	}
+
+
+
+
+	</script>
+
+</body>
+</html>
